@@ -1,23 +1,26 @@
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {GifState} from "../context/gif-context";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { GifState } from "../context/gif-context";
 import Gif from "../components/gif";
-import FollowOn from "../components/follow-on";
 
-import {HiOutlineExternalLink} from "react-icons/hi";
-import {HiMiniChevronDown, HiMiniChevronUp, HiMiniHeart} from "react-icons/hi2";
-import {FaPaperPlane} from "react-icons/fa6";
-import {IoCodeSharp} from "react-icons/io5";
+import { HiOutlineExternalLink } from "react-icons/hi";
+import {
+  HiMiniChevronDown,
+  HiMiniChevronUp,
+  HiMiniHeart,
+} from "react-icons/hi2";
+import { FaPaperPlane } from "react-icons/fa6";
+import { IoCodeSharp } from "react-icons/io5";
 
 const contentType = ["gifs", "stickers", "texts"];
 
 const GifPage = () => {
-  const {type, slug} = useParams();
+  const { type, slug } = useParams();
   const [gif, setGif] = useState({});
   const [relatedGifs, setRelatedGifs] = useState([]);
   const [readMore, setReadMore] = useState(false);
 
-  const {gf, addToFavorites, favorites} = GifState();
+  const { gf, addToFavorites, favorites } = GifState();
 
   useEffect(() => {
     if (!contentType.includes(type)) {
@@ -25,8 +28,8 @@ const GifPage = () => {
     }
     const fetchGif = async () => {
       const gifId = slug.split("-");
-      const {data} = await gf.gif(gifId[gifId.length - 1]);
-      const {data: related} = await gf.related(gifId[gifId.length - 1], {
+      const { data } = await gf.gif(gifId[gifId.length - 1]);
+      const { data: related } = await gf.related(gifId[gifId.length - 1], {
         limit: 10,
       });
       setGif(data);
@@ -83,7 +86,6 @@ const GifPage = () => {
             )}
           </>
         )}
-        <FollowOn />
 
         <div className="divider" />
 
